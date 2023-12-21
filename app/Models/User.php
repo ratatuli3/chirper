@@ -8,10 +8,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Kyslik\ColumnSortable\Sortable;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, Sortable;
 
     public function chirps(): HasMany
     {
@@ -27,7 +28,13 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'is_admin'
+        'usertype'
+    ];
+
+    public $sortable = [
+        'name',
+        'email',
+        'usertype'
     ];
 
     /**

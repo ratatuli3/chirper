@@ -40,5 +40,6 @@ Route::resource('chirps', ChirpController::class)
     ->middleware(['auth', 'verified']);
 
 Route::resource('posts', PostController::class)->middleware(['auth', 'admin']);
+Route::post('add', [PostController::class])->middleware(['auth', 'admin']);
 
 require __DIR__ . '/auth.php';

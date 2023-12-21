@@ -11,27 +11,30 @@
                 <div class="p-6 text-gray-900">
                     <div class="mb-6">
                         <h2 class="text-lg font-medium text-gray-900">
-                            {{ 'Title' }}
+                            {{ 'Name' }}
                         </h2>
                 
                         <p class="mt-1 text-sm text-gray-600">
-                            {{ $post->title }}
+                            {{ $post->name }}
                         </p>
                     </div>
                     <div class="mb-6">
                         <h2 class="text-lg font-medium text-gray-900">
-                            {{ 'Content' }}
+                            {{ 'Email' }}
                         </h2>
-                
                         <p class="mt-1 text-sm text-gray-600">
-                            {{ $post->content }}
+                            {{ $post->email }}
                         </p>
                     </div>
                     <div class="mb-6">
                         <h2 class="text-lg font-medium text-gray-900">
-                            {{ 'Featured Image' }}
+                            {{ 'Role' }}
                         </h2>
-                
+                        <p class="mt-1 text-sm text-gray-600">
+                            {{ $post->usertype }}
+                        </p>
+                    </div>
+                    <div></div>
                         <p class="mt-1 text-sm text-gray-600">
                             <img class="h-64 w-128" src="{{ Storage::url($post->featured_image) }}" alt="{{ $post->title }}" srcset="">
                         </p>

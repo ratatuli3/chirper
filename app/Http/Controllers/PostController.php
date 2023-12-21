@@ -11,6 +11,7 @@ use App\Models\User;
 // We will use Form Request to validate incoming requests from our store and update method
 use App\Http\Requests\Post\StoreRequest;
 use App\Http\Requests\Post\UpdateRequest;
+use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {
@@ -20,7 +21,9 @@ class PostController extends Controller
     public function index(): Response
     {
         return response()->view('posts.index', [
+            //'posts' => User::sortable()->get(),
             'posts' => User::orderBy('updated_at', 'desc')->get(),
+            'posts' => DB::table('users')->paginate(10),
         ]);
     }
 
@@ -39,18 +42,12 @@ class PostController extends Controller
     {
         $validated = $request->validated();
 
-        if ($request->hasFile('featured_image')) {
-             // put image in the public storage
-            $filePath = Storage::disk('public')->put('images/posts/featured-images', request()->file('featured_image'));
-            $validated['featured_image'] = $filePath;
-        }
-
         // insert only requests that already validated in the StoreRequest
-        $create = User::create($validated);
+            $create = User::create($validated);
 
         if($create) {
             // add flash for the success notification
-            session()->flash('notif.success', 'Post created successfully!');
+            session()->flash('notif.success', 'User created successfully!');
             return redirect()->route('posts.index');
         }
 
@@ -75,6 +72,7 @@ class PostController extends Controller
         return response()->view('posts.form', [
             'post' => User::findOrFail($id),
         ]);
+
     }
 
     /**
@@ -84,14 +82,6 @@ class PostController extends Controller
     {
         $post = User::findOrFail($id);
         $validated = $request->validated();
-
-        if ($request->hasFile('featured_image')) {
-            // delete image
-            Storage::disk('public')->delete($post->featured_image);
-
-            $filePath = Storage::disk('public')->put('images/posts/featured-images', request()->file('featured_image'), 'public');
-            $validated['featured_image'] = $filePath;
-        }
 
         $update = $post->update($validated);
 
