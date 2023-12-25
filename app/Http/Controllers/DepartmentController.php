@@ -36,25 +36,26 @@ class DepartmentController
 
         $array = [];
 
-            foreach($rootDepartments as $department){
-               array_push($array, $this->treeDataSerialize($department));
-            }
+        foreach ($rootDepartments as $department) {
+            array_push($array, $this->treeDataSerialize($department));
+        }
         return response()->json(
             $data = $array,
         );
     }
 
     public function treeDataSerialize(Department $department)
-    { 
+    {
         $array = [];
 
-        foreach($department->children()->get() as $department){
+        foreach ($department->children()->get() as $department) {
             array_push($array, $this->treeDataSerialize($department));
-         }
+        }
 
-        return array("text" => $department->name,
-                    "nodes" => $array
-                    );
+        return array(
+            "text" => $department->name,
+            "nodes" => $array,
+        );
     }
 
     public function create(): Response
@@ -62,7 +63,6 @@ class DepartmentController
         return response()->view('departments.create', [
             'departments' => Department::orderBy('updated_at', 'desc')->get(),
         ]);
-
     }
 
     public function store(StoreRequest $request): RedirectResponse
@@ -70,9 +70,9 @@ class DepartmentController
         $validated = $request->validated();
 
         // insert only requests that already validated in the StoreRequest
-            $create = Department::create($validated);
+        $create = Department::create($validated);
 
-        if($create) {
+        if ($create) {
             // add flash for the success notification
             session()->flash('notif.success', 'Department created successfully!');
             return redirect()->route('departments.index');
@@ -103,10 +103,10 @@ class DepartmentController
     public function destroy(string $id): RedirectResponse
     {
         $department = Department::findOrFail($id);
-        
+
         $delete = $department->delete($id);
 
-        if($delete) {
+        if ($delete) {
             session()->flash('notif.success', 'Post deleted successfully!');
             return redirect()->route('departments.index');
         }

@@ -26,7 +26,8 @@
                 dataType: "json",
                 success: function(data) {
                     $('#treeview').treeview({
-                        data: data
+                        data: data,
+                        levels: 10000000,
                     });
                 }
             });
