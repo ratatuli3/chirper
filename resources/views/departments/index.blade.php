@@ -3,7 +3,7 @@
     <x-slot name="header">
         <div class="flex justify-between">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ 'Employees' }}
+                {{ 'Departments' }}
             </h2>
             <a href="{{ route('departments.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded-md">ADD</a>
         </div>
@@ -16,30 +16,46 @@
                     <table class="border-collapse table-auto w-full text-sm">
                         <thead>
                             <tr>
-                                <th class="border-b font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 text-left">@sortablelink('name')</th>
-                                <th class="border-b font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 text-left">@sortablelink('description')</th>
+                                <th class="border-b font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 text-left">
+                                    @sortablelink('name')</th>
+                                <th class="border-b font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 text-left">
+                                    @sortablelink('description')</th>
+                                <th class="border-b font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 text-left">
+                                    @sortablelink('Parent Department')</th>
                                 <th class="border-b font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 text-left">Action</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white">
                             @foreach ($departments as $department)
                                 <tr>
-                                    <td class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">{{ $department->name }}</td>
-                                    <td class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">{{ $department->description }}</td>
-                                    <td class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">
-                                        <a href="{{ route('departments.show', $department->id) }}" class="border border-blue-500 hover:bg-blue-500 hover:text-white px-4 py-2 rounded-md">SHOW</a>
-                                        <a href="{{ route('departments.edit', $department->id) }}" class="border border-yellow-500 hover:bg-yellow-500 hover:text-white px-4 py-2 rounded-md">EDIT</a>
-                                        <form method="post" action="{{ route('departments.destroy', $department->id) }}" class="inline">
+                                    <td
+                                        class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">
+                                        {{ $department->name }}</td>
+                                    <td
+                                        class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">
+                                        {{ $department->description }}</td>
+                                    <td
+                                        class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">
+                                        {{ $department->parent_id }}</td>
+                                    <td
+                                        class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">
+                                        <a href="{{ route('departments.show', $department->id) }}"
+                                            class="border border-blue-500 hover:bg-blue-500 hover:text-white px-4 py-2 rounded-md">SHOW</a>
+                                        <a href="{{ route('departments.edit', $department->id) }}"
+                                            class="border border-yellow-500 hover:bg-yellow-500 hover:text-white px-4 py-2 rounded-md">EDIT</a>
+                                        <form method="post"
+                                            action="{{ route('departments.destroy', $department->id) }}" class="inline">
                                             @csrf
                                             @method('delete')
-                                            <button class="border border-red-500 hover:bg-red-500 hover:text-white px-4 py-2 rounded-md">DELETE</button>
+                                            <button
+                                                class="border border-red-500 hover:bg-red-500 hover:text-white px-4 py-2 rounded-md">DELETE</button>
                                         </form>
                                     </td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
-                   {{-- {!! $departments->appends(\Request::except('page'))->render() !!} --}}
+                    {{-- {!! $departments->appends(\Request::except('page'))->render() !!} --}}
                 </div>
             </div>
         </div>

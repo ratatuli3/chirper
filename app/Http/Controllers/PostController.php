@@ -35,6 +35,7 @@ class PostController extends Controller
         return response()->view('posts.form');
     }
 
+
     /**
      * Store a newly created resource in storage.
      */

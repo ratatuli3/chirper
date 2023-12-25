@@ -47,7 +47,9 @@ Route::resource('departments', DepartmentController::class);
 
 Route::middleware('auth', 'admin')->group(function () {
     Route::get('/departments', [DepartmentController::class, 'index'])->name('departments.index');
-    Route::get('/departments/create', [DepartmentController::class, 'create'])->name('departments.create');
+    Route::get('/tree', [DepartmentController::class, 'tree'])->name('departments.tree');
+    Route::get('/treeData', [DepartmentController::class, 'treeData'])->name('departments.treeData');
+    Route::get('/departments/create', [DepartmentController::class, 'create'])->name('departments.create'); 
     Route::post('/departments', [DepartmentController::class, 'store'])->name('departments.store');
     Route::get('/departments/{department}', [DepartmentController::class, 'show'])->name('departments.show');
     Route::get('/departments/{department}/edit', [DepartmentController::class, 'edit'])->name('departments.edit');

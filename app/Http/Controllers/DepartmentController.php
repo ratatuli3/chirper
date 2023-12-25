@@ -10,6 +10,7 @@ use Illuminate\View\View;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\Departments\StoreRequest;
 use App\Http\Requests\Departments\UpdateRequest;
+use Illuminate\Http\JsonResponse;
 
 class DepartmentController
 {
@@ -19,6 +20,41 @@ class DepartmentController
             'departments' => Department::orderBy('updated_at', 'desc')->get(),
             'departments' => DB::table('departments')->paginate(10),
         ]);
+    }
+
+    public function tree(): Response
+    {
+        return response()->view('departments.tree', [
+            'departments' => Department::orderBy('updated_at', 'desc')->get(),
+            'departments' => DB::table('departments')->paginate(10),
+        ]);
+    }
+
+    public function treeData(): JsonResponse
+    {
+        $rootDepartments = Department::withDepth()->having('depth', '=', 0)->get();
+
+        $array = [];
+
+            foreach($rootDepartments as $department){
+               array_push($array, $this->treeDataSerialize($department));
+            }
+        return response()->json(
+            $data = $array,
+        );
+    }
+
+    public function treeDataSerialize(Department $department)
+    { 
+        $array = [];
+
+        foreach($department->children()->get() as $department){
+            array_push($array, $this->treeDataSerialize($department));
+         }
+
+        return array("text" => $department->name,
+                    "nodes" => $array
+                    );
     }
 
     public function create(): Response
