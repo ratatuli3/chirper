@@ -31,7 +31,7 @@
                             {{ 'Parent Department' }}
                         </h2>
                         <p class="mt-1 text-sm text-gray-600">
-                            {{ $department->parent_id }}
+                            {{ \App\Models\Department::find($department->parent_id)->name ?? ''}}
                         </p>
                     </div>
                     <div class="mb-6">

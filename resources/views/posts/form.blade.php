@@ -56,8 +56,7 @@
                                     data-placeholder="Parent Department">
                                     <option>{{ null }}</option>
                                     @foreach ($departments as $department_i)
-                                        <option value="{{ $department_i->id }}">
-                                            {{-- {{ isset($department) ? (n_array($department)) ?'selected':''>) : }}> --}}
+                                        <option {{isset($post) && $post->department_id ==   $department_i->id ? 'selected': ''}} value="{{ $department_i->id }}" >
                                             {{ $department_i->name }}</option>
                                     @endforeach
                                 </select>

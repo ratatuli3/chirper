@@ -29,7 +29,7 @@ Route::get('/', function () {
 
 Route::get('/home', [HomeController::class, 'index'])->middleware(['auth', 'verified'])->name('home');
 
-Route::get('post', [HomeController::class,'post'])->middleware(['auth', 'admin']);
+Route::get('post', [HomeController::class, 'post'])->middleware(['auth', 'admin']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -47,14 +47,18 @@ Route::resource('departments', DepartmentController::class);
 
 Route::middleware('auth', 'admin')->group(function () {
     Route::get('/departments', [DepartmentController::class, 'index'])->name('departments.index');
-    Route::get('/tree', [DepartmentController::class, 'tree'])->name('departments.tree');
-    Route::get('/treeData', [DepartmentController::class, 'treeData'])->name('departments.treeData');
-    Route::get('/departments/create', [DepartmentController::class, 'create'])->name('departments.create'); 
+    Route::get('/departments/create', [DepartmentController::class, 'create'])->name('departments.create');
     Route::post('/departments', [DepartmentController::class, 'store'])->name('departments.store');
     Route::get('/departments/{department}', [DepartmentController::class, 'show'])->name('departments.show');
     Route::get('/departments/{department}/edit', [DepartmentController::class, 'edit'])->name('departments.edit');
     Route::put('/departments/{department}', [DepartmentController::class, 'update'])->name('departments.update');
     Route::delete('/departments/{department}', [DepartmentController::class, 'destroy'])->name('departments.destroy');
+});
+Route::middleware('auth')->group(function () {
+    Route::get('/tree', [DepartmentController::class, 'tree'])->name('departments.tree');
+    Route::get('/treeData', [DepartmentController::class, 'treeData'])->name('departments.treeData');
+    Route::get('/departments/{department}/userData', [DepartmentController::class, 'userData'])->name('departments.userData');
+    Route::get('/departments/user', [DepartmentController::class, 'user'])->name('departments.user');
 });
 
 require __DIR__ . '/auth.php';

@@ -34,9 +34,12 @@
                             {{ $post->usertype }}
                         </p>
                     </div>
-                    <div></div>
+                    <div class="mb-6">
+                        <h2 class="text-lg font-medium text-gray-900">
+                            {{ 'Parent Department' }}
+                        </h2>
                         <p class="mt-1 text-sm text-gray-600">
-                            <img class="h-64 w-128" src="{{ Storage::url($post->featured_image) }}" alt="{{ $post->title }}" srcset="">
+                            {{ \App\Models\Department::find($post->department_id)->name ?? ''}}
                         </p>
                     </div>
                     <div class="mb-6">

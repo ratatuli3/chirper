@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Requests\Departments\StoreRequest;
 use App\Http\Requests\Departments\UpdateRequest;
 use Illuminate\Http\JsonResponse;
+use App\Models\User;
 
 class DepartmentController
 {
@@ -27,13 +28,14 @@ class DepartmentController
         return response()->view('departments.tree', [
             'departments' => Department::orderBy('updated_at', 'desc')->get(),
             'departments' => DB::table('departments')->paginate(10),
+            'posts' => User::orderBy('updated_at', 'desc')->get(),
+            'posts' => DB::table('users')->paginate(10),
         ]);
     }
 
     public function treeData(): JsonResponse
     {
         $rootDepartments = Department::withDepth()->having('depth', '=', 0)->get();
-
         $array = [];
 
         foreach ($rootDepartments as $department) {
@@ -44,17 +46,37 @@ class DepartmentController
         );
     }
 
+
     public function treeDataSerialize(Department $department)
     {
         $array = [];
 
-        foreach ($department->children()->get() as $department) {
-            array_push($array, $this->treeDataSerialize($department));
+        foreach ($department->children()->get() as $departmentChild) {
+            array_push($array, $this->treeDataSerialize($departmentChild));
         }
 
         return array(
             "text" => $department->name,
             "nodes" => $array,
+            "id" => $department->id,
+        );
+    }
+
+    public function userData(string $department_id): JsonResponse
+    {
+        if (!Department::findOrFail($department_id)) {
+            return abort(404);
+        };
+
+        $users = User::where('department_id', $department_id)->get();
+
+        $array = [];
+
+        foreach ($users as $user) {
+            array_push($array, $user);
+        }
+        return response()->json(
+            $data = $array,
         );
     }
 

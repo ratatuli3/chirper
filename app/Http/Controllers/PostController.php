@@ -21,6 +21,8 @@ class PostController extends Controller
      */
     public function index(): Response
     {
+
+
         return response()->view('posts.index', [
             //'posts' => User::sortable()->get(),
             'posts' => User::orderBy('updated_at', 'desc')->get(),
@@ -33,7 +35,10 @@ class PostController extends Controller
      */
     public function create(): Response
     {
-        return response()->view('posts.form');
+        $departments = Department::orderBy('updated_at', 'desc')->get();
+        return response()->view('posts.form', [
+            'departments' => $departments,
+        ]);
     }
 
 

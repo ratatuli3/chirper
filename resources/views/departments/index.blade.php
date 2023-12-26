@@ -36,7 +36,7 @@
                                         {{ $department->description }}</td>
                                     <td
                                         class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">
-                                        {{ $department->parent_id }}</td>
+                                        {{ \App\Models\Department::find($department->parent_id)->name ?? ''}}</td>
                                     <td
                                         class="border-b border-slate-100 dark:border-slate-700 p-4 pl-8 text-slate-500 dark:text-slate-400">
                                         <a href="{{ route('departments.show', $department->id) }}"

@@ -18,13 +18,14 @@
                     <x-nav-link :href="route('chirps.index')" :active="request()->routeIs('chirps.index')">
                          {{ __('Messages') }}
                     </x-nav-link>
-                    <!-- add this -->
+                    @if(Auth()->user()->usertype=='admin')
                     <x-nav-link :href="route('posts.index')" :active="request()->routeIs('posts.index')">
                         {{__('Employees') }}
                     </x-nav-link>
                     <x-nav-link :href="route('departments.index')" :active="request()->routeIs('departments.index')">
                         {{__('Departments') }}
                     </x-nav-link>
+                    @endif
                     <x-nav-link :href="route('departments.tree')" :active="request()->routeIs('departments.tree')">
                         {{__('Departments Tree') }}
                     </x-nav-link>
