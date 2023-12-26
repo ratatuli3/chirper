@@ -20,6 +20,7 @@ class StoreRequest extends FormRequest
             'email' => 'required|string|min:3|max:6000',
             'usertype' => 'required|string|min:3|max:600|',
             'password' => 'required|string|min:3|max:600|',
+            'department_id' => 'string|nullable',
         ];
     }
 }

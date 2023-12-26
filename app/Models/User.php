@@ -28,7 +28,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'usertype'
+        'usertype',
+        'department_id',
     ];
 
     public $sortable = [

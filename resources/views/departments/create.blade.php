@@ -22,13 +22,15 @@
 
                         <div>
                             <x-input-label for="name" value="Name" />
-                            <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="$department->name ?? old('name')" required autofocus />
+                            <x-text-input id="name" name="name" type="text" class="mt-1 block w-full"
+                                :value="$department->name ?? old('name')" required autofocus />
                             <x-input-error class="mt-2" :messages="$errors->get('name')" />
                         </div>
 
                         <div>
                             <x-input-label for="description" value="Description" />
-                            <x-text-input id="description" name="description" type="text" class="mt-1 block w-full" :value="$department->description ?? old('description')" required autofocus />
+                            <x-text-input id="description" name="description" type="text" class="mt-1 block w-full"
+                                :value="$department->description ?? old('description')" required autofocus />
                             <x-input-error class="mt-2" :messages="$errors->get('description')" />
                         </div>
 
@@ -36,20 +38,18 @@
                             <x-input-label for="parent_id" value="Parent Department" />
 
                             <div>
-                                <select class="form-control" style="width: 100%;"
-                                    name="parent_id"
+                                <select class="form-control" style="width: 100%;" name="parent_id"
                                     data-placeholder="Parent Department">
-                                    <option>{{Null}}</option>
+                                    <option>{{ null }}</option>
                                     @foreach ($departments as $department_i)
                                         <option value="{{ $department_i->id }}">
-                                        {{-- {{ isset($department) ? (n_array($department)) ?'selected':''>) : }}> --}}
+                                            {{-- {{ isset($department) ? (n_array($department)) ?'selected':''>) : }}> --}}
                                             {{ $department_i->name }}</option>
-
                                     @endforeach
                                 </select>
 
 
-{{-- 
+                                {{-- 
                                 <input type="hidden" name="{{ $department->name }}[]" /> --}}
 
                             </div>

@@ -12,6 +12,7 @@ use App\Models\User;
 use App\Http\Requests\Post\StoreRequest;
 use App\Http\Requests\Post\UpdateRequest;
 use Illuminate\Support\Facades\DB;
+use App\Models\Department;
 
 class PostController extends Controller
 {
@@ -44,9 +45,9 @@ class PostController extends Controller
         $validated = $request->validated();
 
         // insert only requests that already validated in the StoreRequest
-            $create = User::create($validated);
+        $create = User::create($validated);
 
-        if($create) {
+        if ($create) {
             // add flash for the success notification
             session()->flash('notif.success', 'User created successfully!');
             return redirect()->route('posts.index');
@@ -70,10 +71,11 @@ class PostController extends Controller
      */
     public function edit(string $id): Response
     {
+        $departments = Department::orderBy('updated_at', 'desc')->get();
         return response()->view('posts.form', [
             'post' => User::findOrFail($id),
+            'departments' => $departments,
         ]);
-
     }
 
     /**
@@ -86,7 +88,7 @@ class PostController extends Controller
 
         $update = $post->update($validated);
 
-        if($update) {
+        if ($update) {
             session()->flash('notif.success', 'Post updated successfully!');
             return redirect()->route('posts.index');
         }
@@ -100,10 +102,10 @@ class PostController extends Controller
     public function destroy(string $id): RedirectResponse
     {
         $post = User::findOrFail($id);
-        
+
         $delete = $post->delete($id);
 
-        if($delete) {
+        if ($delete) {
             session()->flash('notif.success', 'Post deleted successfully!');
             return redirect()->route('posts.index');
         }

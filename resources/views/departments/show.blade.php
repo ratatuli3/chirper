@@ -13,7 +13,7 @@
                         <h2 class="text-lg font-medium text-gray-900">
                             {{ 'Name' }}
                         </h2>
-                
+
                         <p class="mt-1 text-sm text-gray-600">
                             {{ $department->name }}
                         </p>
@@ -28,9 +28,17 @@
                     </div>
                     <div class="mb-6">
                         <h2 class="text-lg font-medium text-gray-900">
+                            {{ 'Parent Department' }}
+                        </h2>
+                        <p class="mt-1 text-sm text-gray-600">
+                            {{ $department->parent_id }}
+                        </p>
+                    </div>
+                    <div class="mb-6">
+                        <h2 class="text-lg font-medium text-gray-900">
                             {{ 'Created At' }}
                         </h2>
-                
+
                         <p class="mt-1 text-sm text-gray-600">
                             {{ $department->created_at }}
                         </p>
@@ -39,12 +47,13 @@
                         <h2 class="text-lg font-medium text-gray-900">
                             {{ 'Updated At' }}
                         </h2>
-                
+
                         <p class="mt-1 text-sm text-gray-600">
                             {{ $department->updated_at }}
                         </p>
                     </div>
-                    <a href="{{ route('departments.index') }}" class="bg-blue-500 text-white px-4 py-2 rounded-md">BACK</a>
+                    <a href="{{ route('departments.index') }}"
+                        class="bg-blue-500 text-white px-4 py-2 rounded-md">BACK</a>
                 </div>
             </div>
         </div>

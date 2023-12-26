@@ -19,6 +19,7 @@ class UpdateRequest extends FormRequest
             'name' => 'required|string|min:3|max:250',
             'email' => 'required|string|min:3|max:6000',
             'usertype' => 'required|string|min:3|max:600|',
+            'department_id' => 'string|nullable',
         ];
     }
 }
