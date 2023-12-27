@@ -36,15 +36,17 @@
 
                         <div>
                             <x-input-label for="usertype" value="Role" />
-                            <x-text-input id="usertype" name="usertype" type="text" class="mt-1 block w-full"
-                                :value="$post->usertype ?? old('usertype')" required autofocus />
-                            <x-input-error class="mt-2" :messages="$errors->get('usertype')" />
+                            <select name="usertype" class="form-select">
+                                <option>{{ null }}</option>
+                                <option>user</option>
+                                <option>admin</option>
+                            </select>
                         </div>
 
                         <div>
                             <x-input-label for="password" value="Password" />
                             {{-- use textarea-input component that we will create after this --}}
-                            <x-text-input id="password" name="password" type="text" class="mt-1 block w-full"
+                            <x-text-input id="password" name="password" type="password" class="mt-1 block w-full"
                                 required autofocus>{{ $post->email ?? old('email') }}</x-text-input>
                             <x-input-error class="mt-2" :messages="$errors->get('password')" />
                         </div>

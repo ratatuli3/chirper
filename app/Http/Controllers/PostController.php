@@ -19,16 +19,39 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): Response
-    {
+    // public function index(Request $request): Response
+    // {
+    //     $departments = Department::orderBy('updated_at', 'desc')->get();
+    //     $order = User::when($request->department_id != null, function ($q) use ($request) {
+    //         return $q->where('department_id', (Department::find($request->department_id)->name ?? ''));
+    //     });
 
+    //     return response()->view('posts.index', [
+    //         'posts' => User::get(),
+    //         'posts' => DB::table('users')->paginate(10),
+    //         'departments' => $departments,
+    //     ]);
+    // }
+
+    public function index(Request $request): Response
+    {
+        $departments = Department::orderBy('updated_at', 'desc')->get();
+
+        $order = User::when($request->department_id != null, function ($q) use ($request) {
+            return $q->where('department_id', ($request->department_id));
+        });
+
+        $sortBy = $request->sort ?? 'updated_at';
+        $orderBy = $request->direction === 'asc' ? 'asc' : 'desc';
+
+        $posts = $order->orderBy($sortBy, $orderBy)->paginate(10);
 
         return response()->view('posts.index', [
-            //'posts' => User::sortable()->get(),
-            'posts' => User::orderBy('updated_at', 'desc')->get(),
-            'posts' => DB::table('users')->paginate(10),
+            'posts' => $posts,
+            'departments' => $departments,
         ]);
     }
+
 
     /**
      * Show the form for creating a new resource.

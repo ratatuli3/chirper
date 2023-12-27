@@ -13,6 +13,24 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
+                 <form action="" method="GET">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label>Filter by Parent Department</label>
+                            <select name="department_id" class="form-select">
+                                <option>{{ null }}</option>
+                                    @foreach ($departments as $department_i)
+                                        <option value="{{ $department_i->id }}" {{ Request::get('department_id') == $department_i->id ? 'selected':''}}>
+                                            {{ $department_i->name }}</option>
+                                    @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <br/>
+                            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md">Filter</button>
+                        </div>
+                    </div>
+                </form>
                     <table class="border-collapse table-auto w-full text-sm">
                         <thead>
                             <tr>
@@ -21,14 +39,13 @@
                                 <th class="border-b font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 text-left">
                                     @sortablelink('email')</th>
                                 <th class="border-b font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 text-left">
-                                    @sortablelink('role')</th>
+                                    @sortablelink('usertype', 'Role')</th>
                                 <th class="border-b font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 text-left">
-                                    @sortablelink('Parent Department')</th>
+                                    @sortablelink('department_id', 'Parent Department')</th>
                                 <th class="border-b font-medium p-4 pl-8 pt-0 pb-3 text-slate-400 text-left">Action</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white">
-                            {{-- populate our post data --}}
                             @foreach ($posts as $post)
                                 <tr>
                                     <td
